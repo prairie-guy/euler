@@ -8,6 +8,8 @@ git commit -m "First commit"
 git remote add orgin https://github.com/prairie-guy/gpu_setup.git
 git push -u origin master
 
+# Files to be ignored belong in .gitignore file
+
 # To clone from Master to a new client
 git clone https://github.com/prairie-guy/euler.git
 
