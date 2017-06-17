@@ -1,6 +1,7 @@
 ;; CBD Module for Various Personal Utilities
 ;;
 
+
 (ns cbd
   (:use [clojure.math.numeric-tower :only (round sqrt ceil floor)])
   (:use [clojure.math.combinatorics :only (partitions)]))
