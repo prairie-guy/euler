@@ -1,12 +1,18 @@
 git
 
-To upload a new repository to github:
+Set up a new Master repository to github and upload local files:
 cd `current repository`
 git init
 git add .
 git commit -m "First commit"
 git remote add orgin https://github.com/prairie-guy/gpu_setup.git
 git push -u origin master
+
+# To clone from Master to a new client
+git clone https://github.com/prairie-guy/euler.git
+
+# To sycn local client with Master
+git pull
 
 # After changes:
 git status              # Status of tree
