@@ -1,0 +1,17 @@
+git
+
+To upload a new repository to github:
+cd `current repository`
+
+git init
+git add .
+git commit -m "First commit"
+git remote add orgin 'url'
+#git remote add orgin https://github.com/prairie-guy/gpu_setup.git
+git remote -v
+git push -f origin master
+
+# After changes:
+git add `files`
+git git commit -m "Changed something in ..."
+git push

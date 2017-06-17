@@ -1,0 +1,125 @@
+;;  sage.clj
+;;  v1.0
+;;
+;;  C. Bryan Daniels
+;;  June 12, 2011
+;;
+;;  Execute sage commands through sage-notebook-server api
+;;
+;;  Download and install 'sage' so that at the command-line it can be started with: 'sage'
+;;  Set up an account with a 'user-name' and 'password'
+;;
+;;  In order for large calculations to be executed by sage-notebook-server
+;;  without failing, consider editing the following file:
+;;
+;;  ~/sage/devel/sagenb/sagenb/notebook/cell.py
+;;  Consider Changing: 
+;; 'MAX_OUTPUT = '32000'    to 'MAX_OUTPUT = 320000000'
+;; 'MAX_OUTPUT_LINES = 120' to 'MAX_OUTPUT_LINES = 12000'
+;;
+;;  Example Usage:
+;;  (def s (sage))                     -> #'user/s
+;;  (s :start-server)                  -> "server started"
+;;  (s :login)                         -> "logged in"
+;;  (s :value "2+2")                   -> "4"
+;;  (s "2+2")                          -> "4"
+;;  (s :eval "2+2")                    ->  4
+;;  (s "2+2; factorial(10)")           -> "3628800"
+;;  (s :values "2+2; factorial(10)")   -> ["4" "3628800"]
+;;  (s :raw "2+2")                     -> "{\n\"status\": \"done\",\n\"files\": [],\n\"cell_id\": 6\n}\n___S_A_G_E___\n\n4\n"
+;;  (s :input-map)                     -> {:session "c41db49a0619c82e738f1b298b4e53b5", :port 8000, :raw "{\n\"session\": \"c41db49a0619c82e738f1b298b4e53b5\"\n}\n___S_A_G_E___\n"}
+;;  (s :logout                         -> "logged out"
+;;  (s :stop-server)                   -> "server stopped"
+
+
+(ns sage
+  (:require (clojure.string))
+  (:require [clj-http.client :as client])
+  (:import (java.net URLEncoder)))
+
+(def admin-passwd "chicago")
+(def default-port 8000)
+
+(defn sage-server-up? [] (if (re-seq #"sagenb/twistedconf" (:out (clojure.java.shell/sh "ps" "aux"))) true false))
+
+(defn sage-start-server
+  ([] (sage-start-server default-port))
+  ([port]
+     (if (not (sage-server-up?))
+       (let [thrd (Thread. #(clojure.java.shell/sh "sage" "-c" (str "from sagenb.notebook.notebook_object import test_notebook; test_notebook('" admin-passwd "', port=" port ")")))]
+         (.start thrd)
+         (while (not (sage-server-up?)) (Thread/sleep 1000))
+         (str "server started"))
+     (str "server previously started"))))
+
+(defn sage-stop-server []
+  (if (sage-server-up?)
+    (let [raw (:out (clojure.java.shell/sh "ps" "aux"))
+          sages (re-seq #".*/sage.*" raw)
+          ps (map first (for [s sages] (re-seq #" [0-9]*" s)))]
+      (dorun (map #(clojure.java.shell/sh "kill" "-9" %) ps))
+      (str "server stopped"))
+    (str "server previously stopped")))
+
+(defn sage-reset-server []
+  (sage-stop-server)
+  (sage-start-server)
+  (str "server reset"))
+
+(defn- sage-login
+  ([] (sage-login "admin" admin-passwd))
+  ([user-name password] (sage-login user-name password default-port))
+  ([user-name password port]
+     (let [raw (:body (client/get (str "http://localhost:" port "/simple/login?username=" user-name "&password=" password)))
+           session (last (first  (re-seq #": \"(.*)\"" raw)))]
+       {:session session :port port :raw raw})))
+
+(defn- sage-logout [login-map]
+  (let [{:keys [session port]} login-map,
+        raw (:body (client/get (str "http://localhost:" port
+                                     "/simple/logout?session=" session)))]
+    raw))
+
+(defn- sage-http
+  ([login-map sage-command] (sage-http login-map :value sage-command))
+  ([login-map return-type sage-command]
+     (let [{:keys [session port]} login-map
+
+           trim-header (fn [s] (clojure.string/replace-first s #"(?s).*___S_A_G_E___\n\n" ""))
+           append-expressions (fn [s] (remove #(= "~~~" %) s))
+           parse-sage-output (fn [s] (append-expressions (clojure.string/split (trim-header s)  #"\n")))
+           raw (:body (client/get (str "http://localhost:" port
+                                        "/simple/compute?session=" session
+                                        "&code=" (URLEncoder/encode (split-expressions sage-command))
+                                        "&timeout=600")))]
+       (condp = return-type
+           :raw raw
+           :values (parse-sage-output raw)
+           :value (last (parse-sage-output raw))
+           (last (parse-sage-output raw))))))
+
+(defn make-sage []
+  (let [login-map (ref {})]
+    (fn [action & args]
+      (condp = action
+          :start-server (sage-start-server)
+          :stop-server (sage-stop-server)
+          :reset-server (sage-reset-server)
+          :login (let [s (apply sage-login args)]
+                   (dosync (ref-set login-map s))
+                   (str "logged in"))
+          :logout (do (sage-logout @login-map)
+                      (str "logged out"))
+          :login-map @login-map
+          :raw    (apply sage-http (concat [@login-map :raw] args))
+          :value  (apply sage-http (concat [@login-map :value] args))
+          :values (apply sage-http (concat [@login-map :values] args))
+          :eval   (read-string (apply sage-http (concat [@login-map :value] args)))
+          (apply sage-http [@login-map :value action])))))
+
+(defn sage []
+  (let [s (make-sage)]
+    (s :start-server)
+    (s :login)
+    (str "use sage-reset-server to reset server")
+    s))
