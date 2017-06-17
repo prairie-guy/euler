@@ -2,16 +2,16 @@ git
 
 To upload a new repository to github:
 cd `current repository`
-
 git init
 git add .
 git commit -m "First commit"
-git remote add orgin 'url'
-#git remote add orgin https://github.com/prairie-guy/gpu_setup.git
-git remote -v
-git push -f origin master
+git remote add orgin https://github.com/prairie-guy/gpu_setup.git
+git push -u origin master
 
 # After changes:
-git add `files`
-git git commit -m "Changed something in ..."
-git push
+git status              # Status of tree
+git add .               # Stage all files for updating (Only specific files: git add `files` )
+git commit -m "Changes" # Commit changed files
+git push                # Push files to github
+
+
