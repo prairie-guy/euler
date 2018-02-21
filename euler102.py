@@ -71,7 +71,7 @@ def euler102(r = 3):
 # Rounding to determine equality REAllY MATTERS; 
 def test():
     for i in range(13):
-        print i, euler102(i)
+        print(i, euler102(i))
     
     
 # start = time()    
