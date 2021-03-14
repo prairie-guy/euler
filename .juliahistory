@@ -246,3 +246,17 @@ primes(123456)
 primes(123456)
 length(primes(123456))
 length(primes(3423452345345))
+R1(10)
+R1(100)
+@time R(10^5);
+R(100)
+@time R(10^4);
+@time R(10^4);
+@time R(10^6);
+@time R(10^6);
+@time R1(10^5);
+@time R1(10^5);
+@time R1(10^6);
+@time R1s = make_R1s(10^5);
+@time R1s = make_R1s(10^5);
+@time R1s = make_R1s(10^6);
