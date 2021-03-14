@@ -2,11 +2,11 @@
 ;; euler100.clj
 ;;
 
-(require '[cbd])
+(require  [cbd.clj])
 (require '[clojure.math.numeric-tower :as cmath])
 (require '[clojure.math.combinatorics :as combinatorics])
-(require '[clojure.repl :refer :all])
 (require '[clojure.string :refer (join trim split split-lines)])
+(require '[clojure.repl :refer :all])
 (require '[clojure.pprint :refer (pprint)])
 ;;(require '[clojure.set])
 ;;(require '[clojure.data.priority-map :refer (priority-map)])

@@ -1,0 +1,1 @@
+/home/cdaniels/.clojure/TEMPLATE.clj

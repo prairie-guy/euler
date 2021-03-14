@@ -1,4 +1,3 @@
-o#!/usr/bin/env cake
 ;;
 ;; euler8.clj
 ;;
@@ -9,11 +8,9 @@ o#!/usr/bin/env cake
 ;;
 ;;         [200 *  375 *  425 = 31875000])
 
-(require '[cbd])
+;;(require '[cbd])
+(load-file "cbd.clj")
 
 (prn (for [i (range 1 1001) j (range i 1001) k (range j 1001)
            :when (and (== (* k k)  (+ (* i i) (* j j))) (== 1000 (+ i j k)))]
        [ i j k (* i j k)]))
-
-
-

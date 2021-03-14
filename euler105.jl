@@ -17,10 +17,10 @@ Using sets.txt a 4K text file with one-hundred sets containing seven to twelve e
 A1, A2, ..., Ak, and find the value of S(A1) + S(A2) + ... + S(Ak).
 
 """
-import Iterators
+import IterTools
 
 function isspecial(set)
-    subsets = [[length(subset), sum(subset), subset] for subset in Iterators.subsets(set)][2:(end - 1)]
+    subsets = [[length(subset), sum(subset), subset] for subset in IterTools.subsets(set)][2:(end - 1)]
     """subset[1] -> size, subset[2]-> sum, subset[3]-> subset"""
     if !allunique(map(subset-> subset[2], subsets))
         """Test Condition (1) of a Special Sum"""        
