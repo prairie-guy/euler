@@ -18,3 +18,14 @@ def partition(n):
         for y in partition(n - x):
             parts.add(tuple(sorted((x, ) + y)))
     return parts
+
+
+stack = []
+def P(n, m = 1):
+  if n == 0:
+    print(stack)
+  else:
+    for i in range(m, n+1):
+      stack.append(str(i))
+      P(n - i, i)
+      stack.pop()
