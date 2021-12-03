@@ -2,7 +2,7 @@
 ;; euler100.clj
 ;;
 
-(require  [cbd.clj])
+(use  'cbd)
 (require '[clojure.math.numeric-tower :as cmath])
 (require '[clojure.math.combinatorics :as combinatorics])
 (require '[clojure.string :refer (join trim split split-lines)])
@@ -61,7 +61,7 @@
     (bigint (first (drop-while #(< % 1000000000000) (iterate #(* m %) base-n))))))
 
 
-(defn euler100 [n]
+(defn euler100 []
   (time
    (search-from (estimate))))
 

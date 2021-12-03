@@ -8,6 +8,7 @@
         org.clojure/data.json {:mvn/version "1.0.0"}
         org.clojure/core.match {:mvn/version "1.0.0"}
         org.clojure/data.csv {:mvn/version "1.0.0"}
-        tupelo/tupelo {:mvn/version "21.01.26b"}
+        tupelo/tupelo {:mvn/version "21.04.13"}
+        clj-python/libpython-clj {:mvn/version "2.00-beta-12"}
         }
-}
+ }

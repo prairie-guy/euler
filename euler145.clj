@@ -6,15 +6,12 @@
 
 
 (require '[cbd])
-(require '[discrete])
 (require '[clojure.math.numeric-tower :as math :refer :all])
 (require '[clojure.math.combinatorics :as combinatorics])
 (require '[clojure.repl :refer :all])
 (require '[clojure.string :refer (join trim split split-lines)])
-(require '[clojure.pprint :refer (pprint)])
-(require '[cuerdas.core :as st])
-(require '[clojure.core.match :refer [match]])
-(require '[defun :refer [defun]])
+
+
 
 ;;(require '[clojure.set])
 ;;(require '[clojure.data.priority-map :refer (priority-map)])

@@ -35,8 +35,12 @@ Given that A is an optimum special sum set for n = 7, find its set string.
 ## Very confusingly, there is also a Standard Library called 'Iterators'. Calling this package clobbers the other.
 ## The fix is a real hack
 
+# Iters = Iterators # Preserves the Standard Library Iterator functions
+# import Iterators  # To access these functions, fully-delimited name must be used.
+
 Iters = Iterators # Preserves the Standard Library Iterator functions
-import Iterators  # To access these functions, fully-delimited name must be used.
+import IterTools  # To access these functions, fully-delimited name must be used.
+
 
 function isspecial(set)
     subsets = [[length(subset), sum(subset), subset] for subset in Iterators.subsets(set)][2:(end - 1)]

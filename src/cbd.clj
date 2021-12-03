@@ -131,6 +131,11 @@
   [n]
   (concat (proper-divisors n) (list n)))
 
+(defn lcm [ns]
+  "Return least common divisor for a collection of numbers"
+  (reduce (fn [n m] (/ (* m n) (gcd m n))) 1 ns))
+
+
 ;; https://mathworld.wolfram.com/PartitionFunctionQ.html
 (defn sigma_0
   "The divisor function sigma_k(n) for n=0 is defined as the number of

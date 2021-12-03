@@ -18,10 +18,9 @@ What is the least value of n for which the number of distinct solutions exceeds 
 """
 
 #using CBD.++          ## Shorthand for merging vectors and strings.
-import Iterators      ## Iterators Module (Main.Iterators or Iterators) overrides Base.Iterators
-import Combinatorics
-import Primes
-
+using Combinatorics
+using Primes
+using Transducers
 """
 Pattern Hunting::
 
@@ -58,7 +57,7 @@ n_proper_divisors(n) = n_divisors(n) - 1
 
 """ppp(n) means pi_product_of_primes_upto(n), i.e., ppp(5) = 2*3*5*7*11"""
 primes_local = primes(10000);
-ppp(n) = reduce(*, big(1), primes_local[1:n])
+ppp(n) = reduce(*, primes_local[1:n],init = big(1))
 
 
 """Generate diophantine_reciprocals of n. Developed in euler108.jl"""
