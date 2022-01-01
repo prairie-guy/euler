@@ -10,7 +10,7 @@
 (require '[clojure.pprint :refer (pprint)])
 (require '[clojure.set])
 (require '[clojure.data.priority-map :refer (priority-map)])
-(require '[clojure.core.matrix :as mx :refer (pm mget mset!)])
+;(require '[clojure.core.matrix :as mx :refer (pm mget mset!)])
 ;(require '[clojure.core.matrix.operators :as m ])
 ;(mx/set-current-implementation :vectorz)
 ;(mx/set-current-implementation :ndarray)
