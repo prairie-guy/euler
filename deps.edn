@@ -2,13 +2,13 @@
  :paths ["/home/cdaniels/.clojure/src"]
 
  :deps {
-        org.clojure/math.numeric-tower {:mvn/version "0.0.4"}
+        org.clojure/math.numeric-tower {:mvn/version "0.0.5"}
         org.clojure/math.combinatorics {:mvn/version "0.1.6"}
         org.clojure/java.classpath {:mvn/version "1.0.0"}
         org.clojure/data.json {:mvn/version "1.0.0"}
         org.clojure/core.match {:mvn/version "1.0.0"}
         org.clojure/data.csv {:mvn/version "1.0.0"}
-        tupelo/tupelo {:mvn/version "21.04.13"}
-        clj-python/libpython-clj {:mvn/version "2.00-beta-12"}
+        tupelo/tupelo {:mvn/version "21.11.06a"}
+        clj-python/libpython-clj {:mvn/version "2.014"}
         }
  }

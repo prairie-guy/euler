@@ -18,12 +18,14 @@ NOTE: This problem is an easier version of Problem 110
 """
                
 ## Provides ++ shorthand for merging vectors and strings. Basically, vcat, hcat and * for strings
-using CBD.++
+# using CBD.++di
+
 
 ##  Iterators Package  clobbers Standard Library version of Iterators
 ##  Standard Library: Base.Iterators
 ##  Package  Library: Main.Iterators or just Iterators
-import Iterators
+#import Iterators
+import  IterTools
 import Combinatorics
 using Primes
 

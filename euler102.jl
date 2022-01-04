@@ -42,7 +42,7 @@ function isInsideTriangle(P,p1,p2,p3,rndTo = 3)
     X = areaTriangle(P,p1,p2)
     Y = areaTriangle(P,p1,p3)
     Z = areaTriangle(P,p2,p3)
-    if (round(A,rndTo) == round(X + Y + Z, rndTo))
+    if (round(A; digits=rndTo) == round(X + Y + Z; digits=rndTo))
         return true
     else
         return false
@@ -52,7 +52,7 @@ end
 
 function euler102(r = 3)
     orig = (0.0,0.0)
-    f = open("euler102.txt","r")
+    f = open("/home/cdaniels/scratch/euler/euler102.txt","r")
     count = 0
     for line in readlines(f)
         line = chomp(line)
@@ -69,7 +69,7 @@ end
 
 function euler102alt(r = 3)
     orig = (0,0)
-    f = open("euler102.txt","r")
+    f = open("/home/cdaniels/scratch/euler/euler102.txt","r")
     M = readcsv(f)
     count = 0    
     for l = 1:size(M,1)    
